@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Us | BOP Renovations</title>
+    <meta
+      name="description"
+      content="Contact BOP Renovations for a free quote on home renovation services in Rotorua and the Bay of Plenty."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script defer src="assets/js/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="index.html">BOP Renovations</a>
+        <nav class="main-nav" aria-label="Main">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+          <ul id="nav-menu" class="nav-menu">
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#why">Why Us</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="contact-us.html">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="button button-primary" href="contact-us.html">Work With Us</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="container split-layout">
+          <div>
+            <p class="eyebrow">Transform your home today!</p>
+            <h1>Contact BOP Renovations</h1>
+            <p>
+              Reach out to our team for a free quote and expert advice on your renovation
+              project in Rotorua and the Bay of Plenty. We’ll respond quickly with the
+              best solution for your home.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="tel:+64276251313">Call +64 27 625 1313</a>
+              <a class="button button-ghost" href="mailto:info@boprenovations.co.nz">Email Us</a>
+            </div>
+          </div>
+          <form
+            class="contact-form"
+            id="enquiry-form"
+            aria-label="Contact form"
+            action="https://formspree.io/f/yourFormId"
+            method="POST"
+          >
+            <input type="hidden" name="_subject" value="New BOP Renovations enquiry" />
+            <label>
+              Name *
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Phone Number *
+              <input type="tel" name="phone" required />
+            </label>
+            <label>
+              Email *
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Type of Service *
+              <select name="service" required>
+                <option value="">Select a service</option>
+                <option>Kitchen Renovation</option>
+                <option>Bathroom Renovation</option>
+                <option>Flooring</option>
+                <option>Painting</option>
+                <option>Tiling</option>
+                <option>Landscaping</option>
+              </select>
+            </label>
+            <label>
+              Number of Service
+              <input type="number" name="quantity" min="1" />
+            </label>
+            <label>
+              Message
+              <textarea name="message" rows="4"></textarea>
+            </label>
+            <button class="button button-primary" type="submit">Submit</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>Build With BOP Renovations</h3>
+          <p>Mon - Sat 7:30 - 17:30, Sunday - Closed</p>
+          <p>
+            Transform your home with Rotorua’s trusted renovation experts.
+            We deliver quality workmanship, modern design, and seamless service — from
+            start to finish.
+          </p>
+        </div>
+        <div>
+          <h3>Our Services</h3>
+          <ul>
+            <li><a href="affordable-kitchen-renovation-rotorua.html">Kitchen Renovation</a></li>
+            <li><a href="affordable-bathroom-renovation-rotorua.html">Bathroom Renovation</a></li>
+            <li><a href="flooring-services-rotorua.html">Flooring &amp; Tiling</a></li>
+            <li><a href="house-painters-rotorua.html">Painting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Office in Rotorua</h3>
+          <p>15 Compton Street, Fenton Park, Rotorua 3010</p>
+          <p><a href="tel:+64276251313">+64 27 625 1313</a></p>
+          <p><a href="mailto:info@boprenovations.co.nz">info@boprenovations.co.nz</a></p>
+          <p><a href="https://www.facebook.com/boprenos" target="_blank" rel="noreferrer">Facebook</a></p>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <p>Copyright © 2026 BOP Renovations</p>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+    </footer>
+  </body>
+</html>
