@@ -1,0 +1,15 @@
+{
+  "name": "bop-renovations",
+  "version": "1.0.0",
+  "description": "BOP Renovations website",
+  "main": "index.js",
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -33,19 +33,26 @@ if (enquiryForm instanceof HTMLFormElement) {
     }
 
     const formData = new FormData(enquiryForm);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      service: formData.get("service"),
+      message: formData.get("message"),
+    };
 
     try {
-      const response = await fetch(enquiryForm.action, {
+      const response = await fetch("/.netlify/functions/send-enquiry", {
         method: "POST",
-        body: formData,
+        body: JSON.stringify(payload),
         headers: {
-          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       });
 
       if (response.ok) {
         if (statusMessage instanceof HTMLElement) {
-          statusMessage.textContent = "Thanks! We\"ll be in touch shortly.";
+          statusMessage.textContent = "Thanks! We'll be in touch shortly. Check your email for confirmation.";
         }
         enquiryForm.reset();
       } else {
@@ -53,8 +60,8 @@ if (enquiryForm instanceof HTMLFormElement) {
 
         try {
           const data = await response.json();
-          if (data && Array.isArray(data.errors) && data.errors.length > 0) {
-            errorMessage = data.errors.map((error) => error.message).join(" ");
+          if (data && data.error) {
+            errorMessage = data.error;
           }
         } catch (error) {
           // Ignore JSON parse errors and use the default message.
