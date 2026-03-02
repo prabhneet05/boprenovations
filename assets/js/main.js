@@ -52,7 +52,7 @@ if (enquiryForm instanceof HTMLFormElement) {
 
       if (response.ok) {
         if (statusMessage instanceof HTMLElement) {
-          statusMessage.textContent = "Thanks! We'll be in touch shortly. Check your email for confirmation.";
+          statusMessage.textContent = "Thanks We'll be in touch shortly. Check your email for confirmation.";
         }
         enquiryForm.reset();
       } else {
