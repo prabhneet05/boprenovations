@@ -1,12 +1,35 @@
 [build]
-  command = "npm install"
+  command   = "npm install && node scripts/build-gallery.js"
   functions = "netlify/functions"
-  publish = "."
+  publish   = "."
 
 [functions]
   node_bundler = "esbuild"
 
 [[redirects]]
-  from = "/.netlify/functions/:name"
-  to = "/.netlify/functions/:name"
+  from   = "/.netlify/functions/:name"
+  to     = "/.netlify/functions/:name"
   status = 200
+
+# Security headers applied to every response
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options            = "SAMEORIGIN"
+    X-Content-Type-Options     = "nosniff"
+    Referrer-Policy            = "strict-origin-when-cross-origin"
+    Permissions-Policy         = "camera=(), microphone=(), geolocation=()"
+    # CSP: all assets are self-hosted; only Google Fonts is external
+    Content-Security-Policy    = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'"
+
+# Long-lived cache for versioned/generated assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML pages — always revalidate
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

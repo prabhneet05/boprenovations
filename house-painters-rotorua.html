@@ -1,20 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-NZ">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>House Painters | BOP Renovations</title>
+    <title>House Painters Rotorua | BOP Renovations</title>
     <meta
       name="description"
-      content="Expert house painters in Bay of Plenty delivering flawless interior and exterior finishes."
+      content="Expert house painters in Bay of Plenty delivering flawless interior and exterior finishes with lasting quality."
     />
+    <meta name="theme-color" content="#ff6a00" />
+    <link rel="icon" href="assets/favicon.ico" sizes="any" />
+    <link rel="canonical" href="https://www.boprenovations.co.nz/house-painters-rotorua.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://www.boprenovations.co.nz/house-painters-rotorua.html" />
+    <meta property="og:title"       content="House Painters Rotorua | BOP Renovations" />
+    <meta property="og:description" content="Expert house painters in Bay of Plenty delivering flawless interior and exterior finishes with lasting quality." />
+    <meta property="og:image"       content="https://boprenovations.co.nz/wp-content/uploads/2025/10/Painting-New-01.webp" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="assets/css/style.css" />
+    <script defer src="assets/js/gallery-data.js"></script>
     <script defer src="assets/js/main.js"></script>
   </head>
   <body>
@@ -58,7 +72,7 @@
           </div>
           <div>
             <img
-              src="https://boprenovations.co.nz/wp-content/uploads/2025/10/Painting-New-01.webp"
+              src="assets/pictures/Painting/IMG-20260218-WA0038.jpg"
               alt="House painting showcase"
               loading="lazy"
             />
@@ -84,6 +98,20 @@
           </div>
         </div>
       </section>
+
+      <section class="section" id="gallery">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Our Work</p>
+              <h2>Painting Projects</h2>
+            </div>
+            <a class="button button-ghost" href="contact-us.html">Get a Free Quote</a>
+          </div>
+          <!-- Populated automatically by main.js from gallery-data.js -->
+          <div class="gallery-grid" data-gallery-category="Painting"></div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -92,7 +120,7 @@
           <h3>Build With BOP Renovations</h3>
           <p>Mon - Sat 7:30 - 17:30, Sunday - Closed</p>
           <p>
-            Transform your home with Bay of Plenty’s trusted renovation experts.
+            Transform your home with Bay of Plenty's trusted renovation experts.
             We deliver quality workmanship, modern design, and seamless service — from
             start to finish.
           </p>
@@ -115,9 +143,17 @@
         </div>
       </div>
       <div class="container footer-bottom">
-        <p>Copyright © 2026 BOP Renovations</p>
+        <p>Copyright &copy; 2026 BOP Renovations</p>
         <a href="privacy-policy.html">Privacy Policy</a>
       </div>
     </footer>
+
+    <div id="lightbox" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button class="lightbox-close" aria-label="Close">&times;</button>
+      <button class="lightbox-prev" aria-label="Previous photo">&#8249;</button>
+      <img class="lightbox-img" src="" alt="" />
+      <button class="lightbox-next" aria-label="Next photo">&#8250;</button>
+      <p class="lightbox-counter" aria-live="polite"></p>
+    </div>
   </body>
 </html>

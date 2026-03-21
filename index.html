@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-NZ">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,13 +8,49 @@
       name="description"
       content="BOP Renovations provides trusted home renovation services in Bay of Plenty including kitchen, bathroom, flooring, painting, tiling, and landscaping."
     />
+    <meta name="theme-color" content="#ff6a00" />
+    <link rel="icon" href="assets/favicon.ico" sizes="any" />
+    <link rel="canonical" href="https://www.boprenovations.co.nz/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://www.boprenovations.co.nz/" />
+    <meta property="og:title"       content="BOP Renovations | Expert Home Renovation Services in Bay of Plenty" />
+    <meta property="og:description" content="BOP Renovations provides trusted home renovation services in Bay of Plenty including kitchen, bathroom, flooring, painting, tiling, and landscaping." />
+    <meta property="og:image"       content="https://boprenovations.co.nz/wp-content/uploads/2025/10/BOP-Renovations-Main-Image-1.webp" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "BOP Renovations",
+      "description": "Trusted home renovation services in Bay of Plenty including kitchen, bathroom, flooring, painting, tiling, and landscaping.",
+      "url": "https://www.boprenovations.co.nz/",
+      "telephone": "+64276251313",
+      "email": "info@boprenovations.co.nz",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "15 Compton Street, Fenton Park",
+        "addressLocality": "Rotorua",
+        "postalCode": "3010",
+        "addressCountry": "NZ"
+      },
+      "openingHours": "Mo-Sa 07:30-17:30",
+      "sameAs": ["https://www.facebook.com/boprenos"]
+    }
+    </script>
+
     <script defer src="assets/js/main.js"></script>
   </head>
   <body>
@@ -42,7 +78,7 @@
     </header>
 
     <main id="main">
-      <section class="hero">
+      <section class="hero hero-home">
         <div class="container hero-grid">
           <div class="hero-content">
             <p class="eyebrow">Build Your Dream House</p>
@@ -124,7 +160,7 @@
           <div class="card-grid">
             <article class="service-card">
               <img
-                src="https://boprenovations.co.nz/wp-content/uploads/2025/10/Bathroom-Installation-New-01.webp"
+                src="assets/pictures/Bathroom/1000148741.jpg"
                 alt="Bathroom renovation"
                 loading="lazy"
               />
@@ -139,14 +175,14 @@
             </article>
             <article class="service-card">
               <img
-                src="https://boprenovations.co.nz/wp-content/uploads/2025/10/Flooring-Installation-New-01.webp"
+                src="assets/pictures/Flooring/IMG-20260218-WA0060.jpg"
                 alt="Flooring installation"
                 loading="lazy"
               />
               <div>
                 <h3>Flooring</h3>
                 <p>
-                  Enhance your home’s comfort with professional carpet installation and
+                  Enhance your home's comfort with professional carpet installation and
                   quality materials across every space.
                 </p>
                 <a class="text-link" href="flooring-services-rotorua.html">Discover more</a>
@@ -154,7 +190,7 @@
             </article>
             <article class="service-card">
               <img
-                src="https://boprenovations.co.nz/wp-content/uploads/2025/10/Painting-New-01.webp"
+                src="assets/pictures/Painting/IMG-20260218-WA0033.jpg"
                 alt="House painting"
                 loading="lazy"
               />
@@ -169,7 +205,7 @@
             </article>
             <article class="service-card">
               <img
-                src="https://boprenovations.co.nz/wp-content/uploads/2025/10/Kitchen-Renovation.webp"
+                src="assets/pictures/Kitchen/IMG-20260218-WA0050.jpg"
                 alt="Kitchen renovation"
                 loading="lazy"
               />
@@ -184,7 +220,7 @@
             </article>
             <article class="service-card">
               <img
-                src="https://boprenovations.co.nz/wp-content/uploads/2025/10/Tiling-Installation-New-01.webp"
+                src="assets/pictures/Tiling/IMG-20260311-WA0004.jpg"
                 alt="Tiling installation"
                 loading="lazy"
               />
@@ -199,7 +235,7 @@
             </article>
             <article class="service-card">
               <img
-                src="https://boprenovations.co.nz/wp-content/uploads/2025/10/Landscaping-1536x1152.webp"
+                src="assets/pictures/Landscaping/IMG-20260223-WA0013.jpg"
                 alt="Outdoor landscaping"
                 loading="lazy"
               />
@@ -207,7 +243,7 @@
                 <h3>Landscaping</h3>
                 <p>
                   Create your dream outdoor space with expert garden landscaping that
-                  enhances your home’s appeal.
+                  enhances your home's appeal.
                 </p>
                 <a class="text-link" href="contact-us.html">Discover more</a>
               </div>
@@ -216,19 +252,35 @@
         </div>
       </section>
 
-      <section class="section" id="projects">
+      <section class="section section-alt" id="projects">
         <div class="container split-layout">
           <div>
             <p class="eyebrow">Transform your home today!</p>
-            <h2>Work with Bay of Plenty’s trusted renovation experts</h2>
+            <h2>Work with Bay of Plenty's trusted renovation experts</h2>
             <p>
               We deliver quality workmanship, modern design, and seamless service — from
-              start to finish. Reach out for a free quote and expert advice on your
-              renovation project in Bay of Plenty and the Bay of Plenty.
+              start to finish. Explore our services to see real project photos, or reach
+              out for a free quote and expert advice on your renovation.
             </p>
             <a class="button button-primary" href="contact-us.html">Book a Consultation</a>
           </div>
-
+          <div class="feature-grid">
+            <article>
+              <h3><a href="affordable-bathroom-renovation-rotorua.html">Bathroom Renovation →</a></h3>
+              <p>Stylish, functional bathrooms tailored to your budget.</p>
+            </article>
+            <article>
+              <h3><a href="affordable-kitchen-renovation-rotorua.html">Kitchen Renovation →</a></h3>
+              <p>Design-led kitchens built for everyday living.</p>
+            </article>
+            <article>
+              <h3><a href="flooring-services-rotorua.html">Flooring →</a></h3>
+              <p>Premium flooring installed with care across every space.</p>
+            </article>
+            <article>
+              <h3><a href="house-painters-rotorua.html">Painting →</a></h3>
+              <p>Flawless interior and exterior finishes that last.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -240,7 +292,7 @@
           <h3>Build With BOP Renovations</h3>
           <p>Mon - Sat 7:30 - 17:30, Sunday - Closed</p>
           <p>
-            Transform your home with Bay of Plenty’s trusted renovation experts.
+            Transform your home with Bay of Plenty's trusted renovation experts.
             We deliver quality workmanship, modern design, and seamless service — from
             start to finish.
           </p>
@@ -263,9 +315,10 @@
         </div>
       </div>
       <div class="container footer-bottom">
-        <p>Copyright © 2026 BOP Renovations</p>
+        <p>Copyright &copy; 2026 BOP Renovations</p>
         <a href="privacy-policy.html">Privacy Policy</a>
       </div>
     </footer>
+
   </body>
 </html>

@@ -8,6 +8,8 @@
   },
   "devDependencies": {},
   "scripts": {
+    "build:gallery": "node scripts/build-gallery.js",
+    "build": "node scripts/build-gallery.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

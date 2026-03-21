@@ -13,6 +13,10 @@
   --radius: 20px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -24,6 +28,13 @@ body {
   color: var(--text);
   background: linear-gradient(180deg, #fff1e4 0%, var(--bg) 55%);
   line-height: 1.6;
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 a {
@@ -105,6 +116,12 @@ ul {
   color: var(--primary);
 }
 
+/* Mark the active nav item */
+.nav-menu a[aria-current="page"] {
+  color: var(--primary);
+  font-weight: 700;
+}
+
 .nav-toggle {
   display: none;
   background: none;
@@ -130,6 +147,7 @@ ul {
   border: 1px solid transparent;
   font-weight: 600;
   transition: 0.2s ease;
+  cursor: pointer;
 }
 
 .button-primary {
@@ -164,11 +182,9 @@ ul {
 .hero {
   padding: 80px 0 60px;
   background:
-    linear-gradient(0deg, rgba(255, 240, 225, 0.6), rgba(255, 240, 225, 0.6)),
-    url("https://boprenovations.co.nz/wp-content/uploads/2025/10/BOP-Renovations-Main-Image-1.webp")
-      center/cover no-repeat,
     radial-gradient(circle at top right, rgba(255, 106, 0, 0.18), transparent 55%),
-    radial-gradient(circle at left, rgba(0, 179, 184, 0.18), transparent 50%);
+    radial-gradient(circle at left, rgba(0, 179, 184, 0.18), transparent 50%),
+    var(--bg);
   position: relative;
   overflow: hidden;
 }
@@ -195,6 +211,77 @@ ul {
   transform: translate3d(-4%, 8%, 0) rotate(-6deg);
   filter: blur(12px);
   opacity: 0.6;
+}
+
+/* ── Homepage dark hero ─────────────────────────────────────────────────────
+   Dual-layer gradient over the background photo:
+   · Left layer  — deep charcoal so white text stays legible
+   · Right layer — brand orange that echoes the sunlight in the photo
+   The floating blob pseudo-elements are hidden; the photo replaces them.
+   ───────────────────────────────────────────────────────────────────────── */
+.hero-home {
+  background:
+    linear-gradient(
+      140deg,
+      rgba(10, 5, 2, 0.84) 0%,
+      rgba(10, 5, 2, 0.70) 45%,
+      rgba(200, 75, 0, 0.52) 100%
+    ),
+    url("../pictures/background/IMG-20260223-WA0016.jpg") center / cover no-repeat;
+  padding: 100px 0 80px;
+}
+
+/* Remove the coloured blob decorations — the photo replaces them */
+.hero-home::before,
+.hero-home::after {
+  display: none;
+}
+
+/* White glass card stands out sharply against the dark photo */
+.hero-home .hero-content {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.hero-home .hero-content h1 {
+  color: #ffffff;
+}
+
+.hero-home .hero-content > p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-home .eyebrow {
+  color: var(--primary);
+}
+
+/* Stat tiles */
+.hero-home .hero-stats div {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.hero-home .hero-stats strong {
+  color: #ffffff;
+}
+
+.hero-home .hero-stats span {
+  color: rgba(255, 255, 255, 0.70);
+}
+
+/* Ghost button needs a light border on dark background */
+.hero-home .button-ghost {
+  border-color: rgba(255, 255, 255, 0.40);
+  color: #ffffff;
+}
+
+.hero-home .button-ghost:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .hero-grid {
@@ -280,6 +367,14 @@ ul {
   align-items: center;
 }
 
+/* Hero split image — consistent crop regardless of photo orientation */
+.hero .split-layout img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  width: 100%;
+}
+
 .feature-grid {
   display: grid;
   gap: 20px;
@@ -306,10 +401,34 @@ ul {
   display: flex;
   flex-direction: column;
   box-shadow: 0 12px 30px rgba(27, 20, 15, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(27, 20, 15, 0.18);
+}
+
+/* Lock every card image to the same height regardless of original photo dimensions */
+.service-card img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 0;      /* card's overflow:hidden handles clipping */
+  width: 100%;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.service-card:hover img {
+  transform: scale(1.04);
+}
+
+/* Push the "Discover more" link to the bottom so all cards align */
 .service-card div {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .service-card h3 {
@@ -319,6 +438,7 @@ ul {
 .service-card p {
   color: var(--muted);
   margin-bottom: 16px;
+  flex: 1;          /* fills remaining space so link sits at the bottom */
 }
 
 .text-link {
@@ -377,6 +497,158 @@ ul {
   padding: 60px 0 30px;
 }
 
+/* ── Gallery preview (single-image teaser on service pages) ── */
+.gallery-preview {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 16 / 9;
+  max-width: 720px;
+  box-shadow: 0 16px 48px rgba(27, 20, 15, 0.2);
+  border: 1px solid var(--border);
+}
+
+.gallery-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-preview:hover img,
+.gallery-preview:focus-visible img {
+  transform: scale(1.04);
+}
+
+.gallery-preview-badge {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  letter-spacing: 0.02em;
+}
+
+/* ── Lightbox slider ── */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 80px;
+}
+
+.lightbox-overlay.open {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 88vh;
+  border-radius: var(--radius);
+  object-fit: contain;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  width: auto;
+  display: block;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s, transform 0.15s;
+  z-index: 2001;
+}
+
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.lightbox-prev:active { transform: translateY(-50%) translateX(-2px); }
+.lightbox-next:active { transform: translateY(-50%) translateX(2px); }
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .lightbox-overlay {
+    padding: 16px 56px;
+  }
+
+  .lightbox-prev { left: 8px; width: 40px; height: 40px; font-size: 1.5rem; }
+  .lightbox-next { right: 8px; width: 40px; height: 40px; font-size: 1.5rem; }
+}
+
+/* ── Dark mode ── */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
@@ -406,11 +678,9 @@ ul {
 
   .hero {
     background:
-      linear-gradient(0deg, rgba(15, 11, 8, 0.65), rgba(15, 11, 8, 0.65)),
-      url("https://boprenovations.co.nz/wp-content/uploads/2025/10/BOP-Renovations-Main-Image-1.webp")
-        center/cover no-repeat,
       radial-gradient(circle at top right, rgba(255, 122, 26, 0.22), transparent 55%),
-      radial-gradient(circle at left, rgba(55, 217, 222, 0.22), transparent 50%);
+      radial-gradient(circle at left, rgba(55, 217, 222, 0.22), transparent 50%),
+      var(--bg);
   }
 
   .hero-content,
@@ -433,6 +703,10 @@ ul {
 
   .section-alt {
     background: #120d09;
+  }
+
+  .gallery-item {
+    border-color: #2b2019;
   }
 }
 
@@ -494,6 +768,10 @@ ul {
   .nav-menu.open {
     display: flex;
   }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -509,4 +787,5 @@ ul {
     flex-direction: column;
     align-items: flex-start;
   }
+
 }

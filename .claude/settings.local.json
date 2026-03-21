@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/build-gallery.js)",
+      "Bash(find c:/Users/pammy/SynologyDrive/Prabhneet/Projects/boprenovations/assets/pictures/ -iname *back* -o -iname *bg*)"
+    ]
+  }
+}
