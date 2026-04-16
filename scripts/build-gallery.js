@@ -4,49 +4,69 @@
 /**
  * build-gallery.js
  *
- * Scans assets/pictures/<Category>/ subdirectories and generates
- * assets/js/gallery-data.js — a tiny JS file that sets window.GALLERY_DATA.
+ * Recursively scans assets/pictures/<Category>/ and all sub-folders,
+ * then writes assets/js/gallery-data.js (window.GALLERY_DATA).
  *
  * Usage:
- *   node scripts/build-gallery.js
+ *   node scripts/build-gallery.js          (or: npm run build:gallery)
  *
- * Run this whenever you add or remove pictures from any category folder.
- * On Netlify this runs automatically as part of the build command.
+ * To add new photos: drop them anywhere inside assets/pictures/<Category>/
+ * (any depth) and re-run.  No HTML changes needed.
  *
- * To add a new category:
- *   1. Create a new subfolder under assets/pictures/  (e.g. assets/pictures/Decking/)
- *   2. Add an entry to CATEGORY_META below with its display label and alt text.
- *   3. Run this script (or push to Netlify) — no HTML changes needed.
+ * To add a new service category:
+ *   1. Create assets/pictures/<NewFolder>/
+ *   2. Add an entry to CATEGORY_META below.
+ *   3. Re-run this script.
  */
 
 const fs   = require('fs');
 const path = require('path');
 
-// ── Configuration ────────────────────────────────────────────────────────────
+// ── Configuration ─────────────────────────────────────────────────────────────
 
-const PICTURES_DIR = path.join(__dirname, '..', 'assets', 'pictures');
-const OUTPUT_FILE  = path.join(__dirname, '..', 'assets', 'js', 'gallery-data.js');
+const PROJECT_ROOT = path.join(__dirname, '..');
+const PICTURES_DIR = path.join(PROJECT_ROOT, 'assets', 'pictures');
+const OUTPUT_FILE  = path.join(PROJECT_ROOT, 'assets', 'js', 'gallery-data.js');
 
 /**
- * Map each folder name to:
- *   key  — the lowercase filter key used by the JS filter buttons (data-filter)
- *   alt  — base alt text for every image in that category
- *
- * Folders not listed here are silently ignored, so you can keep test/draft
- * folders without them appearing on the site.
+ * Category folders to include.
+ * Folders NOT listed here are silently ignored (keeps test/draft images off the site).
+ *   key — lowercase key used in data-gallery-category attributes
+ *   alt — base alt-text prefix for every image in the category
  */
 const CATEGORY_META = {
-  Bathroom:    { key: 'bathroom',    alt: 'Bathroom renovation'    },
-  Kitchen:     { key: 'kitchen',     alt: 'Kitchen renovation'     },
-  Flooring:    { key: 'flooring',    alt: 'Flooring installation'  },
-  Painting:    { key: 'painting',    alt: 'House painting'         },
-  Tiling:      { key: 'tiling',      alt: 'Tiling installation'    },
-  Landscaping: { key: 'landscaping', alt: 'Landscaping project'    },
+  Bathroom:    { key: 'bathroom',    alt: 'Bathroom renovation'   },
+  Kitchen:     { key: 'kitchen',     alt: 'Kitchen renovation'    },
+  Flooring:    { key: 'flooring',    alt: 'Flooring installation' },
+  Painting:    { key: 'painting',    alt: 'House painting'        },
+  Tiling:      { key: 'tiling',      alt: 'Tiling installation'   },
+  Landscaping: { key: 'landscaping', alt: 'Landscaping project'   },
 };
 
-const VALID_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif']);
+const VALID_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif']);
 
-// ── Scan folders ─────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+/**
+ * Recursively walk `dir` and return every image file found at any depth,
+ * as paths relative to PROJECT_ROOT using forward slashes.
+ */
+function collectImages(dir) {
+  if (!fs.existsSync(dir)) return [];
+  const results = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...collectImages(full));
+    } else if (VALID_EXT.has(path.extname(entry.name).toLowerCase())) {
+      // Store as a forward-slash path relative to the project root
+      results.push(path.relative(PROJECT_ROOT, full).replace(/\\/g, '/'));
+    }
+  }
+  return results.sort();
+}
+
+// ── Main ──────────────────────────────────────────────────────────────────────
 
 if (!fs.existsSync(PICTURES_DIR)) {
   console.error(`ERROR: Pictures directory not found: ${PICTURES_DIR}`);
@@ -64,36 +84,33 @@ for (const [folder, meta] of Object.entries(CATEGORY_META)) {
     continue;
   }
 
-  const images = fs
-    .readdirSync(folderPath)
-    .filter(f => VALID_EXTENSIONS.has(path.extname(f).toLowerCase()))
-    .sort()
-    .map((filename, index) => ({
-      src: `assets/pictures/${folder}/${filename}`,
-      alt: `${meta.alt} project ${index + 1}`,
-      category: meta.key,
-    }));
+  const files = collectImages(folderPath);
 
-  if (images.length > 0) {
-    data[meta.key] = images;
-    totalImages += images.length;
-    console.log(`  ${folder}: ${images.length} image(s)`);
-  } else {
-    console.warn(`  WARN: No images found in ${folder}, skipping.`);
+  if (files.length === 0) {
+    console.warn(`  WARN: No images found in ${folder}/, skipping.`);
+    continue;
   }
+
+  data[meta.key] = files.map((src, i) => ({
+    src,
+    alt:      `${meta.alt} project ${i + 1}`,
+    category: meta.key,
+  }));
+
+  totalImages += files.length;
+  console.log(`  ${folder}: ${files.length} image(s)`);
 }
 
-// ── Write output ─────────────────────────────────────────────────────────────
+// ── Write output ──────────────────────────────────────────────────────────────
 
 const output = [
   '// AUTO-GENERATED by scripts/build-gallery.js — do not edit by hand.',
   '// Run `npm run build:gallery` locally or push to Netlify to regenerate.',
-  '// Add images to assets/pictures/<Category>/ and re-run to update the gallery.',
+  '// Drop images anywhere inside assets/pictures/<Category>/ and re-run.',
   `window.GALLERY_DATA = ${JSON.stringify(data, null, 2)};`,
   '',
 ].join('\n');
 
 fs.writeFileSync(OUTPUT_FILE, output, 'utf8');
 
-console.log(`\n✓ gallery-data.js written with ${totalImages} images across ${Object.keys(data).length} categories.`);
-console.log(`  → ${OUTPUT_FILE}`);
+console.log(`\n✓ gallery-data.js written — ${totalImages} images across ${Object.keys(data).length} categories.`);
