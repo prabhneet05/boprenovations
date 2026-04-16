@@ -1,34 +1,29 @@
 'use strict';
 
-// ── Gallery rendering ─────────────────────────────────────────────────────────
-// Each [data-gallery-category] container gets a single preview image.
-// Clicking the preview opens a full-screen slider (lightbox) for that category.
+// ── Gallery preview rendering ─────────────────────────────────────────────────
+// Fills each [data-gallery-category] container with a single preview thumbnail.
+// Clicking it opens the full-screen lightbox for that category.
 
 (function renderGalleries() {
   if (typeof window.GALLERY_DATA === 'undefined') return;
 
   document.querySelectorAll('[data-gallery-category]').forEach(function (container) {
     var cat = container.dataset.galleryCategory;
-
-    // Case-insensitive key lookup
     var key = Object.keys(window.GALLERY_DATA).find(function (k) {
       return k.toLowerCase() === cat.toLowerCase();
     });
     var images = key ? window.GALLERY_DATA[key] : [];
-
     if (!images.length) return;
 
-    var first  = images[0];
-    var count  = images.length;
-    var label  = count === 1 ? '1 photo' : count + ' photos';
+    var count = images.length;
+    var label = count === 1 ? '1 photo' : count + ' photos';
 
     container.innerHTML =
       '<div class="gallery-preview"' +
           ' data-category-key="' + key + '"' +
-          ' role="button"' +
-          ' tabindex="0"' +
+          ' role="button" tabindex="0"' +
           ' aria-label="View gallery — ' + label + '">' +
-        '<img src="' + first.src + '" alt="' + first.alt + '" loading="lazy" />' +
+        '<img src="' + images[0].src + '" alt="' + images[0].alt + '" loading="lazy" />' +
         '<div class="gallery-preview-badge">' +
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"' +
               ' stroke="currentColor" stroke-width="2.2" aria-hidden="true">' +
@@ -36,51 +31,62 @@
             '<circle cx="8.5" cy="8.5" r="1.5"/>' +
             '<polyline points="21 15 16 10 5 21"/>' +
           '</svg>' +
-          'View ' + label +
+          ' View ' + label +
         '</div>' +
       '</div>';
   });
 }());
 
-// ── Lightbox slider ───────────────────────────────────────────────────────────
+// ── Lightbox (module-scope so both gallery previews & card carousels can use it)
 
-var lightboxState = { images: [], index: 0 };
+var lightboxState   = { images: [], index: 0 };
 var lightboxOverlay = document.getElementById('lightbox');
+var lightboxImg, lightboxClose, lightboxPrev, lightboxNext, lightboxCounter;
 
 if (lightboxOverlay) {
-  var lightboxImg     = lightboxOverlay.querySelector('.lightbox-img');
-  var lightboxClose   = lightboxOverlay.querySelector('.lightbox-close');
-  var lightboxPrev    = lightboxOverlay.querySelector('.lightbox-prev');
-  var lightboxNext    = lightboxOverlay.querySelector('.lightbox-next');
-  var lightboxCounter = lightboxOverlay.querySelector('.lightbox-counter');
+  lightboxImg     = lightboxOverlay.querySelector('.lightbox-img');
+  lightboxClose   = lightboxOverlay.querySelector('.lightbox-close');
+  lightboxPrev    = lightboxOverlay.querySelector('.lightbox-prev');
+  lightboxNext    = lightboxOverlay.querySelector('.lightbox-next');
+  lightboxCounter = lightboxOverlay.querySelector('.lightbox-counter');
+}
 
-  function updateSlide() {
-    var img = lightboxState.images[lightboxState.index];
-    if (lightboxImg) { lightboxImg.src = img.src; lightboxImg.alt = img.alt; }
-    if (lightboxCounter) {
-      lightboxCounter.textContent =
-        (lightboxState.index + 1) + ' / ' + lightboxState.images.length;
-    }
-    var multi = lightboxState.images.length > 1;
-    if (lightboxPrev) lightboxPrev.style.display = multi ? '' : 'none';
-    if (lightboxNext) lightboxNext.style.display = multi ? '' : 'none';
+function updateSlide() {
+  if (!lightboxOverlay) return;
+  var item = lightboxState.images[lightboxState.index];
+  if (lightboxImg) { lightboxImg.src = item.src; lightboxImg.alt = item.alt; }
+  if (lightboxCounter) {
+    lightboxCounter.textContent = (lightboxState.index + 1) + ' / ' + lightboxState.images.length;
   }
+  var multi = lightboxState.images.length > 1;
+  if (lightboxPrev) lightboxPrev.style.display = multi ? '' : 'none';
+  if (lightboxNext) lightboxNext.style.display = multi ? '' : 'none';
+}
 
-  function openLightbox(images, startIndex) {
-    lightboxState.images = images;
-    lightboxState.index  = startIndex || 0;
-    updateSlide();
-    lightboxOverlay.classList.add('open');
-    if (lightboxClose) lightboxClose.focus();
-  }
+function openLightbox(images, startIndex) {
+  if (!lightboxOverlay) return;
+  lightboxState.images = images;
+  lightboxState.index  = startIndex || 0;
+  updateSlide();
+  lightboxOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (lightboxClose) lightboxClose.focus();
+}
 
-  function slide(delta) {
-    var n = lightboxState.images.length;
-    lightboxState.index = ((lightboxState.index + delta) % n + n) % n;
-    updateSlide();
-  }
+function closeLightbox() {
+  if (!lightboxOverlay) return;
+  lightboxOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
 
-  // Open on preview click — event delegation handles dynamically-rendered HTML
+function slide(delta) {
+  var n = lightboxState.images.length;
+  lightboxState.index = ((lightboxState.index + delta) % n + n) % n;
+  updateSlide();
+}
+
+if (lightboxOverlay) {
+  // Gallery preview click (service pages)
   document.addEventListener('click', function (e) {
     var preview = e.target.closest('.gallery-preview');
     if (!preview) return;
@@ -89,7 +95,7 @@ if (lightboxOverlay) {
     if (images.length) openLightbox(images, 0);
   });
 
-  // Open preview with Enter / Space (keyboard accessibility)
+  // Gallery preview keyboard (Enter / Space)
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     var preview = document.activeElement && document.activeElement.closest('.gallery-preview');
@@ -100,30 +106,82 @@ if (lightboxOverlay) {
     if (images.length) openLightbox(images, 0);
   });
 
-  // Arrow navigation buttons
   if (lightboxPrev) lightboxPrev.addEventListener('click', function () { slide(-1); });
   if (lightboxNext) lightboxNext.addEventListener('click', function () { slide(1); });
 
-  // Close on backdrop click
   lightboxOverlay.addEventListener('click', function (e) {
-    if (e.target === lightboxOverlay) lightboxOverlay.classList.remove('open');
+    if (e.target === lightboxOverlay) closeLightbox();
   });
 
-  // Close button
-  if (lightboxClose) {
-    lightboxClose.addEventListener('click', function () {
-      lightboxOverlay.classList.remove('open');
-    });
-  }
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
 
-  // Keyboard: arrows to navigate, Escape to close
   document.addEventListener('keydown', function (e) {
     if (!lightboxOverlay.classList.contains('open')) return;
-    if (e.key === 'Escape')      lightboxOverlay.classList.remove('open');
+    if (e.key === 'Escape')      closeLightbox();
     if (e.key === 'ArrowLeft')   slide(-1);
     if (e.key === 'ArrowRight')  slide(1);
   });
 }
+
+// ── Homepage card carousel ─────────────────────────────────────────────────────
+// Each .card-img-wrap[data-category] on index.html gets:
+//   • prev / next buttons to flip through the category's photos
+//   • click-on-image → full-screen lightbox at current index
+
+(function initCardCarousels() {
+  if (typeof window.GALLERY_DATA === 'undefined') return;
+
+  document.querySelectorAll('.card-img-wrap[data-category]').forEach(function (wrap) {
+    var cat = wrap.dataset.category;
+    var key = Object.keys(window.GALLERY_DATA).find(function (k) {
+      return k.toLowerCase() === cat.toLowerCase();
+    });
+    var images = key ? window.GALLERY_DATA[key] : [];
+    if (!images.length) return;
+
+    var idx     = 0;
+    var img     = wrap.querySelector('img');
+    var btnPrev = wrap.querySelector('.card-prev');
+    var btnNext = wrap.querySelector('.card-next');
+    var counter = wrap.querySelector('.card-counter');
+
+    function update() {
+      if (img)     { img.src = images[idx].src; img.alt = images[idx].alt; }
+      if (counter) { counter.textContent = (idx + 1) + ' / ' + images.length; }
+    }
+
+    update(); // sync counter with whichever image is already shown
+
+    if (images.length <= 1) {
+      if (btnPrev) btnPrev.style.display = 'none';
+      if (btnNext) btnNext.style.display = 'none';
+    }
+
+    if (btnPrev) {
+      btnPrev.addEventListener('click', function (e) {
+        e.stopPropagation();
+        idx = (idx - 1 + images.length) % images.length;
+        update();
+      });
+    }
+
+    if (btnNext) {
+      btnNext.addEventListener('click', function (e) {
+        e.stopPropagation();
+        idx = (idx + 1) % images.length;
+        update();
+      });
+    }
+
+    // Clicking the photo opens full-screen lightbox at current slide
+    if (img) {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', function () {
+        openLightbox(images, idx);
+      });
+    }
+  });
+}());
 
 // ── Mobile nav toggle ─────────────────────────────────────────────────────────
 

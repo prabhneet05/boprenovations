@@ -409,17 +409,93 @@ ul {
   box-shadow: 0 20px 40px rgba(27, 20, 15, 0.18);
 }
 
-/* Lock every card image to the same height regardless of original photo dimensions */
-.service-card img {
+/* ── Card image carousel ─────────────────────────────────────────────────── */
+/* Wraps the <img> on homepage service cards to add prev/next navigation.    */
+
+.card-img-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--bg-alt);
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover .card-img-wrap img {
+  transform: scale(1.04);
+}
+
+/* Prev / next arrows — fade in on hover */
+.card-prev,
+.card-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(10, 5, 2, 0.60);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s, transform 0.15s;
+  z-index: 3;
+  /* Keep translateY(-50%) and add hover scale separately */
+}
+
+.card-img-wrap:hover .card-prev,
+.card-img-wrap:hover .card-next {
+  opacity: 1;
+}
+
+.card-prev:hover,
+.card-next:hover {
+  background: var(--primary);
+}
+
+.card-prev { left: 10px; }
+.card-next { right: 10px; }
+
+/* Photo counter badge */
+.card-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  background: rgba(10, 5, 2, 0.65);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+/* Legacy rule kept for non-carousel images (service-page hero etc.) */
+.service-card > img {
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 0;      /* card's overflow:hidden handles clipping */
+  border-radius: 0;
   width: 100%;
   display: block;
   transition: transform 0.35s ease;
 }
 
-.service-card:hover img {
+.service-card:hover > img {
   transform: scale(1.04);
 }
 
