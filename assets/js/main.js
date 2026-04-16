@@ -124,64 +124,66 @@ if (lightboxOverlay) {
 }
 
 // ── Homepage card carousel ─────────────────────────────────────────────────────
-// Each .card-img-wrap[data-category] on index.html gets:
-//   • prev / next buttons to flip through the category's photos
-//   • click-on-image → full-screen lightbox at current index
+// Uses event delegation — one listener handles ALL cards.
+// State (current index) is stored as data-index on the .card-img-wrap element
+// so no per-element setup is needed and timing is never an issue.
 
-(function initCardCarousels() {
-  if (typeof window.GALLERY_DATA === 'undefined') return;
+function cardGalleryKey(cat) {
+  if (!cat || typeof window.GALLERY_DATA === 'undefined') return null;
+  return Object.keys(window.GALLERY_DATA).find(function (k) {
+    return k.toLowerCase() === cat.toLowerCase();
+  }) || null;
+}
 
-  document.querySelectorAll('.card-img-wrap[data-category]').forEach(function (wrap) {
-    var cat = wrap.dataset.category;
-    var key = Object.keys(window.GALLERY_DATA).find(function (k) {
-      return k.toLowerCase() === cat.toLowerCase();
-    });
+function cardUpdate(wrap, idx) {
+  var key    = cardGalleryKey(wrap.dataset.category);
+  var images = key ? window.GALLERY_DATA[key] : [];
+  if (!images.length) return;
+
+  idx = ((idx % images.length) + images.length) % images.length;
+  wrap.dataset.index = idx;
+
+  var img     = wrap.querySelector('img');
+  var counter = wrap.querySelector('.card-counter');
+  if (img)     { img.src = images[idx].src; img.alt = images[idx].alt; }
+  if (counter) { counter.textContent = (idx + 1) + ' / ' + images.length; }
+}
+
+// Sync all counters once gallery data is ready (deferred scripts run in order)
+document.querySelectorAll('.card-img-wrap[data-category]').forEach(function (wrap) {
+  cardUpdate(wrap, 0);
+});
+
+// Single delegated listener for prev, next, and image click
+document.addEventListener('click', function (e) {
+  // ── Prev button
+  var prev = e.target.closest('.card-prev');
+  if (prev) {
+    e.stopPropagation();
+    var wrap = prev.closest('.card-img-wrap');
+    if (wrap) cardUpdate(wrap, parseInt(wrap.dataset.index || '0', 10) - 1);
+    return;
+  }
+
+  // ── Next button
+  var next = e.target.closest('.card-next');
+  if (next) {
+    e.stopPropagation();
+    var wrap = next.closest('.card-img-wrap');
+    if (wrap) cardUpdate(wrap, parseInt(wrap.dataset.index || '0', 10) + 1);
+    return;
+  }
+
+  // ── Image click → open lightbox
+  var cardImg = e.target.closest('.card-img-wrap img');
+  if (cardImg) {
+    var wrap   = cardImg.closest('.card-img-wrap');
+    var key    = wrap ? cardGalleryKey(wrap.dataset.category) : null;
     var images = key ? window.GALLERY_DATA[key] : [];
-    if (!images.length) return;
-
-    var idx     = 0;
-    var img     = wrap.querySelector('img');
-    var btnPrev = wrap.querySelector('.card-prev');
-    var btnNext = wrap.querySelector('.card-next');
-    var counter = wrap.querySelector('.card-counter');
-
-    function update() {
-      if (img)     { img.src = images[idx].src; img.alt = images[idx].alt; }
-      if (counter) { counter.textContent = (idx + 1) + ' / ' + images.length; }
-    }
-
-    update(); // sync counter with whichever image is already shown
-
-    if (images.length <= 1) {
-      if (btnPrev) btnPrev.style.display = 'none';
-      if (btnNext) btnNext.style.display = 'none';
-    }
-
-    if (btnPrev) {
-      btnPrev.addEventListener('click', function (e) {
-        e.stopPropagation();
-        idx = (idx - 1 + images.length) % images.length;
-        update();
-      });
-    }
-
-    if (btnNext) {
-      btnNext.addEventListener('click', function (e) {
-        e.stopPropagation();
-        idx = (idx + 1) % images.length;
-        update();
-      });
-    }
-
-    // Clicking the photo opens full-screen lightbox at current slide
-    if (img) {
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', function () {
-        openLightbox(images, idx);
-      });
-    }
-  });
-}());
+    if (images.length) openLightbox(images, parseInt(wrap.dataset.index || '0', 10));
+    return;
+  }
+});
 
 // ── Mobile nav toggle ─────────────────────────────────────────────────────────
 
