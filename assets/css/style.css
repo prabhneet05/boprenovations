@@ -1,21 +1,21 @@
 :root {
   color-scheme: light;
-  /* ── Brand palette derived from logo ───────────────────────────────────────
-     Crimson red  #8C1B25  (bottom-left panel)
-     Steel blue   #2B547E  (right panels)
-     Charcoal     #252729  (top-left panel)
+  /* ── Exact logo colours ─────────────────────────────────────────────────────
+     Charcoal  #363839  top-left panel  → header, footer, dark sections
+     Red       #9B2030  bottom-left     → primary buttons, active states
+     Blue      #3A6590  right panels    → links, eyebrows, accents
   ── */
-  --bg:           #F5F6F8;
-  --bg-alt:       #ECEEF2;
-  --text:         #1A1C20;
-  --muted:        #5A5E68;
-  --primary:      #8C1B25;
-  --primary-dark: #6B1420;
-  --accent:       #2B547E;
-  --accent-strong:#2B547E;
-  --charcoal:     #252729;
-  --border:       #D6D9DF;
-  --shadow:       0 20px 45px rgba(25, 28, 35, 0.14);
+  --bg:           #FFFFFF;
+  --bg-alt:       #F3F4F7;
+  --text:         #1E2022;
+  --muted:        #5C6370;
+  --primary:      #9B2030;
+  --primary-dark: #7A1826;
+  --accent:       #3A6590;
+  --accent-strong:#3A6590;
+  --charcoal:     #363839;
+  --border:       #DDE0E6;
+  --shadow:       0 20px 45px rgba(20, 22, 28, 0.13);
   --radius:       20px;
 }
 
@@ -32,7 +32,7 @@ html {
 body {
   font-family: "Inter", system-ui, sans-serif;
   color: var(--text);
-  background: linear-gradient(180deg, #ECEEF2 0%, var(--bg) 55%);
+  background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 55%);
   line-height: 1.6;
 }
 
@@ -81,9 +81,9 @@ ul {
 .site-header {
   position: sticky;
   top: 0;
-  background: rgba(245, 246, 248, 0.96);
+  background: rgba(54, 56, 57, 0.97);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   z-index: 999;
 }
 
@@ -101,11 +101,11 @@ ul {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--charcoal);
+  color: #ffffff;
 }
 
 .logo img {
-  width: 40px;
+  width: auto;
   height: 40px;
   border-radius: 8px;
   object-fit: contain;
@@ -127,12 +127,12 @@ ul {
 
 .nav-menu a {
   font-weight: 500;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .nav-menu a:hover,
 .nav-menu a:focus-visible {
-  color: var(--primary);
+  color: #ffffff;
 }
 
 /* Mark the active nav item */
@@ -153,7 +153,7 @@ ul {
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--text);
+  background: #ffffff;
   margin: 4px 0;
 }
 
@@ -855,9 +855,9 @@ ul {
     position: absolute;
     right: 4vw;
     top: 70px;
-    background: #fff;
+    background: var(--charcoal);
     border-radius: 16px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: var(--shadow);
     flex-direction: column;
     padding: 16px 20px;
