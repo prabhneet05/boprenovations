@@ -433,7 +433,7 @@ ul {
   transform: scale(1.04);
 }
 
-/* Prev / next arrows — always visible on the image */
+/* Prev / next arrows — hidden until the image is hovered */
 .card-prev,
 .card-next {
   position: absolute;
@@ -443,7 +443,7 @@ ul {
   height: 38px;
   border-radius: 50%;
   border: none;
-  background: rgba(10, 5, 2, 0.55);
+  background: rgba(10, 5, 2, 0.45);
   color: #fff;
   font-size: 1.7rem;
   line-height: 1;
@@ -451,16 +451,23 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, transform 0.15s;
+  opacity: 0;
+  transition: opacity 0.25s, background 0.2s, transform 0.15s;
   z-index: 3;
   box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-  /* Suppress default button style */
   padding: 0;
   outline: none;
 }
 
+/* Fade in when the image wrapper is hovered */
+.card-img-wrap:hover .card-prev,
+.card-img-wrap:hover .card-next {
+  opacity: 0.75;
+}
+
 .card-prev:hover,
 .card-next:hover {
+  opacity: 1 !important;
   background: var(--primary);
   transform: translateY(-50%) scale(1.1);
 }
