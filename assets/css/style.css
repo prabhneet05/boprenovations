@@ -1,16 +1,22 @@
 :root {
   color-scheme: light;
-  --bg: #fff7ee;
-  --bg-alt: #ffe9d6;
-  --text: #1b140f;
-  --muted: #5e4b40;
-  --primary: #ff6a00;
-  --primary-dark: #d45500;
-  --accent: #00b3b8;
-  --accent-strong: #6a00ff;
-  --border: #f1d7bf;
-  --shadow: 0 20px 45px rgba(27, 20, 15, 0.18);
-  --radius: 20px;
+  /* ── Brand palette derived from logo ───────────────────────────────────────
+     Crimson red  #8C1B25  (bottom-left panel)
+     Steel blue   #2B547E  (right panels)
+     Charcoal     #252729  (top-left panel)
+  ── */
+  --bg:           #F5F6F8;
+  --bg-alt:       #ECEEF2;
+  --text:         #1A1C20;
+  --muted:        #5A5E68;
+  --primary:      #8C1B25;
+  --primary-dark: #6B1420;
+  --accent:       #2B547E;
+  --accent-strong:#2B547E;
+  --charcoal:     #252729;
+  --border:       #D6D9DF;
+  --shadow:       0 20px 45px rgba(25, 28, 35, 0.14);
+  --radius:       20px;
 }
 
 html {
@@ -26,7 +32,7 @@ html {
 body {
   font-family: "Inter", system-ui, sans-serif;
   color: var(--text);
-  background: linear-gradient(180deg, #fff1e4 0%, var(--bg) 55%);
+  background: linear-gradient(180deg, #ECEEF2 0%, var(--bg) 55%);
   line-height: 1.6;
 }
 
@@ -75,7 +81,7 @@ ul {
 .site-header {
   position: sticky;
   top: 0;
-  background: rgba(255, 243, 229, 0.92);
+  background: rgba(245, 246, 248, 0.96);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   z-index: 999;
@@ -91,7 +97,20 @@ ul {
 
 .logo {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--charcoal);
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
 }
 
 .main-nav {
@@ -182,8 +201,8 @@ ul {
 .hero {
   padding: 80px 0 60px;
   background:
-    radial-gradient(circle at top right, rgba(255, 106, 0, 0.18), transparent 55%),
-    radial-gradient(circle at left, rgba(0, 179, 184, 0.18), transparent 50%),
+    radial-gradient(circle at top right, rgba(140, 27, 37, 0.12), transparent 55%),
+    radial-gradient(circle at left, rgba(43, 84, 126, 0.12), transparent 50%),
     var(--bg);
   position: relative;
   overflow: hidden;
@@ -196,7 +215,7 @@ ul {
   inset: -10% -5% auto auto;
   width: 60%;
   height: 120%;
-  background: linear-gradient(135deg, rgba(255, 106, 0, 0.25), rgba(106, 0, 255, 0.25));
+  background: linear-gradient(135deg, rgba(140, 27, 37, 0.18), rgba(43, 84, 126, 0.18));
   transform: translate3d(6%, -8%, 0) rotate(6deg);
   filter: blur(10px);
   opacity: 0.7;
@@ -207,7 +226,7 @@ ul {
   inset: auto auto -25% -10%;
   width: 55%;
   height: 90%;
-  background: linear-gradient(135deg, rgba(0, 179, 184, 0.35), rgba(255, 122, 26, 0.2));
+  background: linear-gradient(135deg, rgba(43, 84, 126, 0.22), rgba(140, 27, 37, 0.14));
   transform: translate3d(-4%, 8%, 0) rotate(-6deg);
   filter: blur(12px);
   opacity: 0.6;
@@ -215,17 +234,16 @@ ul {
 
 /* ── Homepage dark hero ─────────────────────────────────────────────────────
    Dual-layer gradient over the background photo:
-   · Left layer  — deep charcoal so white text stays legible
-   · Right layer — brand orange that echoes the sunlight in the photo
-   The floating blob pseudo-elements are hidden; the photo replaces them.
+   · Left  — logo charcoal so white text stays legible
+   · Right — logo crimson red for brand identity
    ───────────────────────────────────────────────────────────────────────── */
 .hero-home {
   background:
     linear-gradient(
       140deg,
-      rgba(10, 5, 2, 0.84) 0%,
-      rgba(10, 5, 2, 0.70) 45%,
-      rgba(200, 75, 0, 0.52) 100%
+      rgba(37, 39, 41, 0.88) 0%,
+      rgba(37, 39, 41, 0.72) 45%,
+      rgba(140, 27, 37, 0.58) 100%
     ),
     url("../pictures/background/IMG-20260223-WA0016.jpg") center / cover no-repeat;
   padding: 100px 0 80px;
@@ -384,7 +402,7 @@ ul {
   padding: 20px;
   border-radius: 16px;
   border: 1px solid var(--border);
-  background: #fff6ee;
+  background: #FFFFFF;
 }
 
 .card-grid {
@@ -394,19 +412,19 @@ ul {
 }
 
 .service-card {
-  background: #fff6ee;
+  background: #FFFFFF;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 12px 30px rgba(27, 20, 15, 0.12);
+  box-shadow: 0 12px 30px rgba(25, 28, 35, 0.10);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .service-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(27, 20, 15, 0.18);
+  box-shadow: 0 20px 40px rgba(25, 28, 35, 0.15);
 }
 
 /* ── Card image carousel ─────────────────────────────────────────────────── */
@@ -536,7 +554,7 @@ ul {
 .contact-form {
   display: grid;
   gap: 16px;
-  background: #fff6ee;
+  background: #FFFFFF;
   padding: 28px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -563,7 +581,7 @@ ul {
 .contact-form input:focus,
 .contact-form select:focus,
 .contact-form textarea:focus {
-  outline: 2px solid rgba(255, 106, 0, 0.25);
+  outline: 2px solid rgba(140, 27, 37, 0.25);
   border-color: var(--primary);
 }
 
@@ -574,7 +592,7 @@ ul {
 }
 
 .site-footer {
-  background: #1c120d;
+  background: var(--charcoal);
   color: #f8fafc;
   padding: 60px 0 30px;
 }
