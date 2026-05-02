@@ -20,3 +20,4 @@ Open index.html in a browser, or serve the folder with a simple static server.
 ## Notes
 - Images are linked from the live site. You can download and replace them with local assets if preferred.
 - The contact form is static and requires integration with a form backend (e.g., Netlify Forms, Formspree, or a custom API).
+
