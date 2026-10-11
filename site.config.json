@@ -1,0 +1,26 @@
+{
+  "name": "BOP Renovations",
+  "description": "Trusted home renovation services in Bay of Plenty including kitchen, bathroom, flooring, painting, tiling, and landscaping.",
+  "url": "https://www.boprenovations.co.nz/",
+  "phone": "+64276251313",
+  "phoneDisplay": "+64 27 625 1313",
+  "email": "info@boprenovations.co.nz",
+  "facebook": "https://www.facebook.com/boprenos",
+  "ogImage": "https://www.boprenovations.co.nz/assets/pictures/logo.jpeg",
+  "logoPath": "assets/pictures/logo.jpeg",
+  "hoursDisplay": "Mon - Sat 7:30 - 17:30, Sunday - Closed",
+  "openingHours": "Mo-Sa 07:30-17:30",
+  "areaServed": ["Rotorua", "Bay of Plenty"],
+  "copyrightYear": 2026,
+  "address": {
+    "street": "79 Sunset Road",
+    "suburb": "Mangakakahi",
+    "city": "Rotorua",
+    "region": "Bay of Plenty",
+    "postalCode": "3015",
+    "country": "NZ",
+    "full": "79 Sunset Road, Mangakakahi, Rotorua 3015"
+  },
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=79+Sunset+Road%2C+Mangakakahi%2C+Rotorua+3015",
+  "mapsEmbedUrl": "https://maps.google.com/maps?q=79%20Sunset%20Road%2C%20Mangakakahi%2C%20Rotorua%203015&z=17&output=embed"
+}

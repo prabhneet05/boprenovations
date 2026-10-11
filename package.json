@@ -9,7 +9,8 @@
   "devDependencies": {},
   "scripts": {
     "build:gallery": "node scripts/build-gallery.js",
-    "build": "node scripts/build-gallery.js",
+    "build:chrome": "node scripts/inject-chrome.js",
+    "build": "node scripts/build-gallery.js && node scripts/inject-chrome.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

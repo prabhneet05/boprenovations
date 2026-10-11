@@ -1,23 +1,30 @@
 # BOP Renovations (Static Site)
 
-This is a rebuilt static version of the BOP Renovations website.
+Static website for BOP Renovations, hosted on Netlify.
 
 ## Structure
-- index.html
-- contact-us.html
-- affordable-kitchen-renovation-rotorua.html
-- affordable-bathroom-renovation-rotorua.html
-- flooring-services-rotorua.html
-- house-painters-rotorua.html
-- home-renovation-projects-rotorua.html
-- privacy-policy.html
-- assets/css/style.css
-- assets/js/main.js
+- `index.html` and service/contact/privacy pages
+- `site.config.json` — business name, address, phone, hours, and map links
+- `assets/css/style.css`
+- `assets/js/main.js` — navigation, galleries, and the contact form
+- `netlify/functions/send-enquiry.js` — emails enquiries via Gmail
+- `scripts/build-gallery.js` — generates `assets/js/gallery-data.js`
+- `scripts/inject-chrome.js` — writes the shared header, footer, and JSON-LD into every page
 
 ## Run locally
-Open index.html in a browser, or serve the folder with a simple static server.
+Serve the folder with a simple static server (opening `index.html` as a file will not send the contact form):
 
-## Notes
-- Images are linked from the live site. You can download and replace them with local assets if preferred.
-- The contact form is static and requires integration with a form backend (e.g., Netlify Forms, Formspree, or a custom API).
+```bash
+npx --yes serve .
+```
 
+The contact form posts to `/.netlify/functions/send-enquiry`. For local form testing, use the Netlify CLI or deploy a draft. See `SETUP_GUIDE.md` for Gmail and Netlify environment variables.
+
+## Build
+```bash
+npm run build
+```
+
+This regenerates the photo gallery and refreshes headers, footers, and structured data from `site.config.json`.
+
+To change the business address or phone, edit `site.config.json` and run `npm run build:chrome`.

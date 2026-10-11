@@ -9,7 +9,7 @@
       content="BOP Renovations provides trusted home renovation services in Bay of Plenty including kitchen, bathroom, flooring, painting, tiling, and landscaping."
     />
     <meta name="theme-color" content="#8C1B25" />
-    <link rel="icon" href="assets/pictures/logo.jpeg" type="image/png" />
+    <link rel="icon" href="assets/pictures/logo.jpeg" type="image/jpeg" />
     <link rel="canonical" href="https://www.boprenovations.co.nz/" />
 
     <!-- Open Graph -->
@@ -17,7 +17,10 @@
     <meta property="og:url"         content="https://www.boprenovations.co.nz/" />
     <meta property="og:title"       content="BOP Renovations | Expert Home Renovation Services in Bay of Plenty" />
     <meta property="og:description" content="BOP Renovations provides trusted home renovation services in Bay of Plenty including kitchen, bathroom, flooring, painting, tiling, and landscaping." />
-    <meta property="og:image"       content="https://boprenovations.co.nz/wp-content/uploads/2025/10/BOP-Renovations-Main-Image-1.webp" />
+    <meta property="og:image"       content="https://www.boprenovations.co.nz/assets/pictures/logo.jpeg" />
+    <meta property="og:image:alt"   content="BOP Renovations" />
+    <meta property="og:locale"      content="en_NZ" />
+    <meta name="twitter:card"       content="summary" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,26 +33,38 @@
     <link rel="stylesheet" href="assets/css/style.css" />
 
     <!-- JSON-LD structured data -->
+    <!-- SITE_JSON_LD_START -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@id": "https://www.boprenovations.co.nz/#business",
+      "@type": "HomeAndConstructionBusiness",
       "name": "BOP Renovations",
       "description": "Trusted home renovation services in Bay of Plenty including kitchen, bathroom, flooring, painting, tiling, and landscaping.",
       "url": "https://www.boprenovations.co.nz/",
+      "image": "https://www.boprenovations.co.nz/assets/pictures/logo.jpeg",
       "telephone": "+64276251313",
       "email": "info@boprenovations.co.nz",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "79 Sunset Road, Mangakakahi",
         "addressLocality": "Rotorua",
+        "addressRegion": "Bay of Plenty",
         "postalCode": "3015",
         "addressCountry": "NZ"
       },
       "openingHours": "Mo-Sa 07:30-17:30",
-      "sameAs": ["https://www.facebook.com/boprenos"]
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=79+Sunset+Road%2C+Mangakakahi%2C+Rotorua+3015",
+      "areaServed": [
+        "Rotorua",
+        "Bay of Plenty"
+      ],
+      "sameAs": [
+        "https://www.facebook.com/boprenos"
+      ]
     }
     </script>
+    <!-- SITE_JSON_LD_END -->
 
     <script defer src="assets/js/gallery-data.js"></script>
     <script defer src="assets/js/main.js"></script>
@@ -57,6 +72,7 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
+    <!-- SITE_HEADER_START -->
     <header class="site-header" id="top">
       <div class="container header-content">
         <a class="logo" href="index.html"><img src="assets/pictures/logo.jpeg" alt="BOP Renovations logo" width="40" height="40" />BOP Renovations</a>
@@ -77,6 +93,7 @@
         <a class="button button-primary" href="contact-us.html">Work With Us</a>
       </div>
     </header>
+    <!-- SITE_HEADER_END -->
 
     <main id="main">
       <section class="hero hero-home">
@@ -293,6 +310,7 @@
       </section>
     </main>
 
+    <!-- SITE_FOOTER_START -->
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
@@ -311,14 +329,17 @@
             <li><a href="affordable-bathroom-renovation-rotorua.html">Bathroom Renovation</a></li>
             <li><a href="flooring-services-rotorua.html">Flooring &amp; Tiling</a></li>
             <li><a href="house-painters-rotorua.html">Painting</a></li>
+            <li><a href="home-renovation-projects-rotorua.html">Projects</a></li>
           </ul>
         </div>
         <div>
           <h3>Office in Rotorua</h3>
-          <p>79 Sunset Road, Mangakakahi, Rotorua 3015</p>
+          <address>
+            <a href="https://www.google.com/maps/search/?api=1&query=79+Sunset+Road%2C+Mangakakahi%2C+Rotorua+3015" target="_blank" rel="noopener noreferrer">79 Sunset Road, Mangakakahi, Rotorua 3015</a>
+          </address>
           <p><a href="tel:+64276251313">+64 27 625 1313</a></p>
           <p><a href="mailto:info@boprenovations.co.nz">info@boprenovations.co.nz</a></p>
-          <p><a href="https://www.facebook.com/boprenos" target="_blank" rel="noreferrer">Facebook</a></p>
+          <p><a href="https://www.facebook.com/boprenos" target="_blank" rel="noopener noreferrer">Facebook</a></p>
         </div>
       </div>
       <div class="container footer-bottom">
@@ -326,6 +347,7 @@
         <a href="privacy-policy.html">Privacy Policy</a>
       </div>
     </footer>
+    <!-- SITE_FOOTER_END -->
 
     <div id="lightbox" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Image viewer">
       <button class="lightbox-close" aria-label="Close">&times;</button>
